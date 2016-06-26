@@ -49,7 +49,7 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
 	
 	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout
 	, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-		return CGSizeMake(view.frame.width, 50)
+		return CGSizeMake(view.frame.width, 60)
 	}
 
 }
@@ -82,16 +82,30 @@ class LaCelda: UICollectionViewCell {
 		return label
 	}()
 	
+	//agregaremos una imagen a la celda al lado del label de texto del mismo modo que el label ... declaramos y agregamos constraints para posicion
+	let profileImageView : UIImageView = {
+		let imageView = UIImageView()
+		imageView.contentMode = .ScaleAspectFit //mantener proporcion
+		imageView.backgroundColor = UIColor.grayColor()
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		return imageView
+		
+	}()
 	
 	//definicion del la celda, atributos
 	func setupViews() {
     	backgroundColor = UIColor.whiteColor()
-		
 		//agregando el label de texto (nameLabel) dentro de la celda
 		addSubview(nameLabel)
-		//modificando la posicion del label mediante los constraints
-		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+		//agregando subview de la imagen a la celda
+		addSubview(profileImageView)
+		
+		//modificando la posicion del label mediante los constraints, tambien se agrega la imagen creada dinamicamente en el constraint del eje Horz
+		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-8-[v0(44)]-8-[v1]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": profileImageView, "v1": nameLabel]))
+		
 		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+		// constraint de la imagen eje vertical
+		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-8-[v0(44)]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": profileImageView]))
 		
 		
 	}
