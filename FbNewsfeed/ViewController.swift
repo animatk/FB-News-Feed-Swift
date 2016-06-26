@@ -10,7 +10,7 @@ import UIKit
 
 let cellId = "cellId"
 
-class MainController: UICollectionViewController {
+class MainController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -30,6 +30,9 @@ class MainController: UICollectionViewController {
 		
 		collectionView?.registerClass(LaCelda.self, forCellWithReuseIdentifier: cellId)
 		
+		//agregar la capacidad para que la view se pudea arrastrar (scroll)
+		collectionView?.alwaysBounceVertical = true;
+		
 	}
 	// metodo numberOfItemsInSection
 	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -38,6 +41,15 @@ class MainController: UICollectionViewController {
 	// metodo cellForItemAtIndexPath
 	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 		return collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath)
+	}
+	
+	//una vez creadas las celdas, estas tienen forma libre y se arman como un cuadro pequeño una al lado de la otra
+	//lo que vamos a hacer es volverlas de un tamaño del 100% de la pantalla para eso esxtendemos el presente controller
+	//trallendo la clase , UICollectionViewDelegateFlowLayout y le aplicamos el nuevo tamaño con el siguiente metodo
+	
+	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout
+	, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+		return CGSizeMake(view.frame.width, 50)
 	}
 
 }
