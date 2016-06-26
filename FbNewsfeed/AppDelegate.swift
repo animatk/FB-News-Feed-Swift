@@ -17,6 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.
+		
+		//crear la ventana una vez se elimino el storyboard.
+		window = UIWindow(frame: UIScreen.mainScreen().bounds)
+		window?.makeKeyAndVisible()
+		
+		//crear el navigation controller y establecer la ventana creada como root
+		let mainController = MainController(collectionViewLayout : UICollectionViewFlowLayout())
+		let navigationController = UINavigationController(rootViewController: mainController)
+		window?.rootViewController = navigationController;
+		
 		return true
 	}
 

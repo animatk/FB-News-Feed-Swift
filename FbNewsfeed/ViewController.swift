@@ -8,18 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainController: UICollectionViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		collectionView?.backgroundColor = UIColor(white: 0.95, alpha: 1)
 		// Do any additional setup after loading the view, typically from a nib.
 	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
-	}
-
 
 }
 
