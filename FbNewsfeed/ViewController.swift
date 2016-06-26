@@ -12,9 +12,11 @@ class MainController: UICollectionViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+		//color de fondo de la vista de inicio
 		collectionView?.backgroundColor = UIColor(white: 0.95, alpha: 1)
-		// Do any additional setup after loading the view, typically from a nib.
+		
+		//titulo de la barra de navegacion
+		navigationItem.title = "Facebook Feed"
 	}
 
 }

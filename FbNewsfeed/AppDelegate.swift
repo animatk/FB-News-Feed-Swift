@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.
+		//primero se elimino el storyboard y en el archivo del proyecto (el primero del arbol lateral) se quito la opcion Main del select que dice Main interface
 		
 		//crear la ventana una vez se elimino el storyboard.
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -26,6 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let mainController = MainController(collectionViewLayout : UICollectionViewFlowLayout())
 		let navigationController = UINavigationController(rootViewController: mainController)
 		window?.rootViewController = navigationController;
+		
+		//darle un color a la barra de navegacion basado en RGB
+		UINavigationBar.appearance().barTintColor = UIColor(red: 51/255, green: 90/255, blue: 149/255, alpha: 1)
+		//el color de texto
+		UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+		//establecer el color de la barra superior del dispositivo (operador, hora,  bateria) NOTA: Esta configuracion por si sola no servira debido a que hay que agregar en el archivo Info.plist la opcion (View controller-based status bar appearance) y debe ser igual a NO
+		application.statusBarStyle = .LightContent
 		
 		return true
 	}
