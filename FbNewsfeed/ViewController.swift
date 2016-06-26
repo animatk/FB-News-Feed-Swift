@@ -70,8 +70,29 @@ class LaCelda: UICollectionViewCell {
 	required init?(coder aDecoder: NSCoder){
 		fatalError("init(coder:) no esta implementado")
 	}
+	
+	//se crea un label de texto que se agregara a cada una de las celdas creadas
+	//primero se declara con sus caracteristicas y luego dentro de la funcion setupViews se declara la posicion y alineacion 
+	//mediante los constraints
+	let nameLabel: UILabel = {
+		let label = UILabel()
+		label.text = "Ejemplo nombre"
+		label.font = UIFont.boldSystemFontOfSize(14)
+		label.translatesAutoresizingMaskIntoConstraints = false //esto permique que el elmento se adapte a los constrains que se declararan dentro del constructor de la celda
+		return label
+	}()
+	
+	
 	//definicion del la celda, atributos
 	func setupViews() {
     	backgroundColor = UIColor.whiteColor()
+		
+		//agregando el label de texto (nameLabel) dentro de la celda
+		addSubview(nameLabel)
+		//modificando la posicion del label mediante los constraints
+		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+		
+		
 	}
 }
