@@ -100,13 +100,27 @@ class LaCelda: UICollectionViewCell {
 		//agregando subview de la imagen a la celda
 		addSubview(profileImageView)
 		
-		//modificando la posicion del label mediante los constraints, tambien se agrega la imagen creada dinamicamente en el constraint del eje Horz
-		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-8-[v0(44)]-8-[v1]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": profileImageView, "v1": nameLabel]))
+		//llamado a la extencion que permite crear constraints segun formato
+		addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views:  profileImageView, nameLabel)
+		addConstraintsWithFormat("V:|[v0]|", views:  nameLabel)
+		addConstraintsWithFormat("V:|-8-[v0(44)]", views: profileImageView)
 		
-		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-		// constraint de la imagen eje vertical
-		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-8-[v0(44)]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": profileImageView]))
+	}
+}
+
+extension UIView{
+	//extersion creada para limpiar y optimizar el proceso de asignar constraints
+	//cada UIview creada necesita adaptarse mediante constraints pero la creacion de estos puede simplificarse mendiante esta extension
+	func addConstraintsWithFormat(format : String, views : UIView...){
+		//como el listado de views es un listado separado por comas vamos a recorrerlo para crear un diccionario (arreglo) y declarar las keys 
+		var viewsDictionary = [String: UIView]()
+		for(index, view) in views.enumerate(){
+			let key = "v\(index)"
+			viewsDictionary[key] = view
+			view.translatesAutoresizingMaskIntoConstraints = false
+		}
 		
-		
+		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
+	
 	}
 }
