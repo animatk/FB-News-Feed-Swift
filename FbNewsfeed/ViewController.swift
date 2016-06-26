@@ -76,15 +76,35 @@ class LaCelda: UICollectionViewCell {
 	//mediante los constraints
 	let nameLabel: UILabel = {
 		let label = UILabel()
-		label.text = "Ejemplo nombre"
-		label.font = UIFont.boldSystemFontOfSize(14)
-		label.translatesAutoresizingMaskIntoConstraints = false //esto permique que el elmento se adapte a los constrains que se declararan dentro del constructor de la celda
+		//vamos a darle al label un formato de 2 lineas, ambas con caracteristicas diferentes (fuente, color, tamaño)
+		//la primera el nombre de la persona, y la segunda los detalles de fecha y hora de publicacion
+		label.numberOfLines = 2
+        //primera parte del texto con tamaño 14
+        let attributedText = NSMutableAttributedString(string: "Mark Zucaritas", attributes: [NSFontAttributeName: UIFont.boldSystemFontOfSize(14)])
+        //segundo bloque de texto con respectivos atributos tañano 12 color gris
+        attributedText.appendAttributedString(NSAttributedString(string: "\nAgosto 18  •  Bogotá  •  "
+		, attributes: [NSFontAttributeName: UIFont.systemFontOfSize(12), NSForegroundColorAttributeName:
+            UIColor(red: 155/255, green: 161/255, blue: 171/255, alpha: 1)]))
+        //espacio entre lineas
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+		
+        attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.characters.count))
+        //agregar imagen en la linea de texto
+        let attachment = NSTextAttachment()
+        attachment.image = UIImage(named: "globe_small")
+        attachment.bounds = CGRectMake(0, -2, 12, 12)
+        attributedText.appendAttributedString(NSAttributedString(attachment: attachment))
+        
+        label.attributedText = attributedText
+		
 		return label
 	}()
 	
 	//agregaremos una imagen a la celda al lado del label de texto del mismo modo que el label ... declaramos y agregamos constraints para posicion
 	let profileImageView : UIImageView = {
 		let imageView = UIImageView()
+		imageView.image = UIImage(named: "mark-zucaritas")
 		imageView.contentMode = .ScaleAspectFit //mantener proporcion
 		imageView.backgroundColor = UIColor.grayColor()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
