@@ -84,7 +84,7 @@ class LaCelda: UICollectionViewCell {
         //segundo bloque de texto con respectivos atributos tañano 12 color gris
         attributedText.appendAttributedString(NSAttributedString(string: "\nAgosto 18  •  Bogotá  •  "
 		, attributes: [NSFontAttributeName: UIFont.systemFontOfSize(12), NSForegroundColorAttributeName:
-            UIColor(red: 155/255, green: 161/255, blue: 171/255, alpha: 1)]))
+            UIColor.rgb(155, green: 161, blue: 171)]))
         //espacio entre lineas
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4
@@ -131,10 +131,11 @@ class LaCelda: UICollectionViewCell {
 	}()
 	
 	let likesLabelView : UILabel = {
-		let likesLabel = UILabel()
-		likesLabel.text = "489 Likes   10.8K Comments"
-		likesLabel.font = UIFont.systemFontOfSize(12)
-		return likesLabel
+		let label = UILabel()
+		label.text = "489 Likes   10.8K Comments"
+		label.font = UIFont.systemFontOfSize(12)
+		label.textColor = UIColor.rgb(155, green: 161, blue: 171)
+		return label
 	}()
 	
 	//definicion del la celda, atributos
@@ -156,6 +157,13 @@ class LaCelda: UICollectionViewCell {
 		addConstraintsWithFormat("H:|[v0]|", views: statusImageView)
 		addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]-8-[v3(24)]-8-|", views: profileImageView, statusTextView, statusImageView, likesLabelView)
 		
+	}
+}
+
+extension UIColor{
+	//se crea esta extencion para facilitar la asignacion de colores a los textos
+	static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor{
+		return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1);
 	}
 }
 
