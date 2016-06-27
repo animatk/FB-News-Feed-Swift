@@ -138,6 +138,27 @@ class LaCelda: UICollectionViewCell {
 		return label
 	}()
 	
+	let dividerline : UIView = {
+		let view = UIView()
+		view.backgroundColor = UIColor.rgb(226, green: 228, blue: 232)
+		return view
+	}()
+	
+	let likeButton : UIButton = {
+		let button = UIButton()
+		button.setTitle("Like", forState: .Normal)
+		button.setTitleColor(UIColor.rgb(155, green: 161, blue: 171 ), forState: .Normal)
+		
+		button.setImage(UIImage(named: "like"), forState: .Normal) //icono
+		button.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0) // padding del texto en relacion a icono
+		
+		button.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
+		
+		return button
+		
+	}()
+	
+	
 	//definicion del la celda, atributos
 	func setupViews() {
     	backgroundColor = UIColor.whiteColor()
@@ -148,14 +169,21 @@ class LaCelda: UICollectionViewCell {
 		addSubview(statusTextView)
 		addSubview(statusImageView)
 		addSubview(likesLabelView)
+		addSubview(dividerline)
+		
+		addSubview(likeButton)
 		
 		//llamado a la extencion que permite crear constraints segun formato
 		addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views:  profileImageView, nameLabel)
-		addConstraintsWithFormat("H:|-4-[v0]-4-|", views: statusTextView)
 		addConstraintsWithFormat("V:|-12-[v0]", views:  nameLabel)
-		addConstraintsWithFormat("H:|-12-[v0]|", views: likesLabelView)
+		addConstraintsWithFormat("H:|-4-[v0]-4-|", views: statusTextView)
 		addConstraintsWithFormat("H:|[v0]|", views: statusImageView)
-		addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]-8-[v3(24)]-8-|", views: profileImageView, statusTextView, statusImageView, likesLabelView)
+		addConstraintsWithFormat("H:|-12-[v0]|", views: likesLabelView)
+		addConstraintsWithFormat("H:|-12-[v0]-12-|", views: dividerline)
+		addConstraintsWithFormat("H:|[v0]|", views: likeButton)
+		addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]-8-[v3(24)]-8-[v4(0.4)][v5(44)]|", views:
+			profileImageView, statusTextView, statusImageView, likesLabelView, dividerline, likeButton)
+		
 		
 	}
 }
