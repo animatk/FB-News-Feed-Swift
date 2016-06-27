@@ -49,7 +49,7 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
 	
 	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout
 	, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-		return CGSizeMake(view.frame.width, 60)
+		return CGSizeMake(view.frame.width, 200)
 	}
 
 }
@@ -112,6 +112,14 @@ class LaCelda: UICollectionViewCell {
 		
 	}()
 	
+	//Label de texto que representa el post realizado por el usuuario
+	let statusTextView: UITextView = {
+		let textView = UITextView()
+		textView.text = "Que Gran diagrama de fb en iOS!"
+		textView.font = UIFont.systemFontOfSize(14)
+		return textView
+	}()
+	
 	//definicion del la celda, atributos
 	func setupViews() {
     	backgroundColor = UIColor.whiteColor()
@@ -119,11 +127,13 @@ class LaCelda: UICollectionViewCell {
 		addSubview(nameLabel)
 		//agregando subview de la imagen a la celda
 		addSubview(profileImageView)
+		addSubview(statusTextView)
 		
 		//llamado a la extencion que permite crear constraints segun formato
 		addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views:  profileImageView, nameLabel)
-		addConstraintsWithFormat("V:|[v0]|", views:  nameLabel)
-		addConstraintsWithFormat("V:|-8-[v0(44)]", views: profileImageView)
+		addConstraintsWithFormat("H:|-4-[v0]-4-|", views: statusTextView)
+		addConstraintsWithFormat("V:|-12-[v0]", views:  nameLabel)
+		addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]", views: profileImageView, statusTextView)
 		
 	}
 }
