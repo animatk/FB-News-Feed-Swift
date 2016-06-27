@@ -49,7 +49,7 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
 	
 	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout
 	, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-		return CGSizeMake(view.frame.width, 200)
+		return CGSizeMake(view.frame.width, 320)
 	}
 
 }
@@ -115,9 +115,26 @@ class LaCelda: UICollectionViewCell {
 	//Label de texto que representa el post realizado por el usuuario
 	let statusTextView: UITextView = {
 		let textView = UITextView()
-		textView.text = "Que Gran diagrama de fb en iOS!"
+		textView.text = "Que Gran foto  tomada con mi iPhone!"
 		textView.font = UIFont.systemFontOfSize(14)
 		return textView
+	}()
+	
+	//agregaremos una imagen  a modo de imagen de estado
+	let statusImageView : UIImageView = {
+		let imageView = UIImageView()
+		imageView.image = UIImage(named: "playa-mar")
+		imageView.contentMode = .ScaleAspectFill //mantener proporcion, se adapta al 100 del la celda... para evitarlo se usa lo siguiente
+		imageView.layer.masksToBounds = true
+		return imageView
+		
+	}()
+	
+	let likesLabelView : UILabel = {
+		let likesLabel = UILabel()
+		likesLabel.text = "489 Likes   10.8K Comments"
+		likesLabel.font = UIFont.systemFontOfSize(12)
+		return likesLabel
 	}()
 	
 	//definicion del la celda, atributos
@@ -128,12 +145,16 @@ class LaCelda: UICollectionViewCell {
 		//agregando subview de la imagen a la celda
 		addSubview(profileImageView)
 		addSubview(statusTextView)
+		addSubview(statusImageView)
+		addSubview(likesLabelView)
 		
 		//llamado a la extencion que permite crear constraints segun formato
 		addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views:  profileImageView, nameLabel)
 		addConstraintsWithFormat("H:|-4-[v0]-4-|", views: statusTextView)
 		addConstraintsWithFormat("V:|-12-[v0]", views:  nameLabel)
-		addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]", views: profileImageView, statusTextView)
+		addConstraintsWithFormat("H:|-12-[v0]|", views: likesLabelView)
+		addConstraintsWithFormat("H:|[v0]|", views: statusImageView)
+		addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]-8-[v3(24)]-8-|", views: profileImageView, statusTextView, statusImageView, likesLabelView)
 		
 	}
 }
