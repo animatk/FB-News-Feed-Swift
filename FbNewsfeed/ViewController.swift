@@ -144,19 +144,25 @@ class LaCelda: UICollectionViewCell {
 		return view
 	}()
 	
-	let likeButton : UIButton = {
+	let likeButton = LaCelda.buttonForView("Like", imageName: "like")
+	let commentButton = LaCelda.buttonForView("Comments", imageName: "comment")
+	let shareButton = LaCelda.buttonForView("Share", imageName: "share")
+	
+	//funcion creada para simplificar la creacion de botones...
+	
+	static func buttonForView(title: String, imageName : String) -> UIButton{
 		let button = UIButton()
-		button.setTitle("Like", forState: .Normal)
+		button.setTitle(title, forState: .Normal)
 		button.setTitleColor(UIColor.rgb(155, green: 161, blue: 171 ), forState: .Normal)
 		
-		button.setImage(UIImage(named: "like"), forState: .Normal) //icono
+		button.setImage(UIImage(named: imageName), forState: .Normal) //icono
 		button.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0) // padding del texto en relacion a icono
 		
 		button.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
 		
 		return button
-		
-	}()
+	}
+	
 	
 	
 	//definicion del la celda, atributos
@@ -172,6 +178,8 @@ class LaCelda: UICollectionViewCell {
 		addSubview(dividerline)
 		
 		addSubview(likeButton)
+		addSubview(commentButton)
+		addSubview(shareButton)
 		
 		//llamado a la extencion que permite crear constraints segun formato
 		addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views:  profileImageView, nameLabel)
@@ -180,9 +188,12 @@ class LaCelda: UICollectionViewCell {
 		addConstraintsWithFormat("H:|[v0]|", views: statusImageView)
 		addConstraintsWithFormat("H:|-12-[v0]|", views: likesLabelView)
 		addConstraintsWithFormat("H:|-12-[v0]-12-|", views: dividerline)
-		addConstraintsWithFormat("H:|[v0]|", views: likeButton)
+		addConstraintsWithFormat("H:|[v0(v2)][v1(v2)][v2]|", views: likeButton, commentButton, shareButton)
 		addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]-8-[v3(24)]-8-[v4(0.4)][v5(44)]|", views:
 			profileImageView, statusTextView, statusImageView, likesLabelView, dividerline, likeButton)
+		
+		addConstraintsWithFormat("V:[v0(44)]|", views: commentButton)
+		addConstraintsWithFormat("V:[v0(44)]|", views: shareButton)
 		
 		
 	}
