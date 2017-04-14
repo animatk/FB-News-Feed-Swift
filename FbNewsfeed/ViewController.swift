@@ -28,28 +28,28 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
 		//en este paso se agrega las celdas (filas) a la colectionView (tabla)
 		//para ello se crea la estructura de la celda, dicha estructura es una nueva clase que se instancia
 		
-		collectionView?.registerClass(LaCelda.self, forCellWithReuseIdentifier: cellId)
+		collectionView?.register(LaCelda.self, forCellWithReuseIdentifier: cellId)
 		
 		//agregar la capacidad para que la view se pudea arrastrar (scroll)
 		collectionView?.alwaysBounceVertical = true;
 		
 	}
 	// metodo numberOfItemsInSection
-	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return 3
 	}
 	// metodo cellForItemAtIndexPath
-	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-		return collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath)
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		return collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
 	}
 	
 	//una vez creadas las celdas, estas tienen forma libre y se arman como un cuadro pequeño una al lado de la otra
 	//lo que vamos a hacer es volverlas de un tamaño del 100% de la pantalla para eso esxtendemos el presente controller
 	//trallendo la clase , UICollectionViewDelegateFlowLayout y le aplicamos el nuevo tamaño con el siguiente metodo
 	
-	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout
-	, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-		return CGSizeMake(view.frame.width, 320)
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout
+	, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		return CGSize(width: view.frame.width, height: 320)
 	}
 
 }
@@ -80,10 +80,10 @@ class LaCelda: UICollectionViewCell {
 		//la primera el nombre de la persona, y la segunda los detalles de fecha y hora de publicacion
 		label.numberOfLines = 2
         //primera parte del texto con tamaño 14
-        let attributedText = NSMutableAttributedString(string: "Mark Zucaritas", attributes: [NSFontAttributeName: UIFont.boldSystemFontOfSize(14)])
+        let attributedText = NSMutableAttributedString(string: "Mark Zucaritas", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)])
         //segundo bloque de texto con respectivos atributos tañano 12 color gris
-        attributedText.appendAttributedString(NSAttributedString(string: "\nAgosto 18  •  Bogotá  •  "
-		, attributes: [NSFontAttributeName: UIFont.systemFontOfSize(12), NSForegroundColorAttributeName:
+        attributedText.append(NSAttributedString(string: "\nAgosto 18  •  Bogotá  •  "
+		, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName:
             UIColor.rgb(155, green: 161, blue: 171)]))
         //espacio entre lineas
         let paragraphStyle = NSMutableParagraphStyle()
@@ -93,8 +93,8 @@ class LaCelda: UICollectionViewCell {
         //agregar imagen en la linea de texto
         let attachment = NSTextAttachment()
         attachment.image = UIImage(named: "globe_small")
-        attachment.bounds = CGRectMake(0, -2, 12, 12)
-        attributedText.appendAttributedString(NSAttributedString(attachment: attachment))
+        attachment.bounds = CGRect(x: 0, y: -2, width: 12, height: 12)
+        attributedText.append(NSAttributedString(attachment: attachment))
         
         label.attributedText = attributedText
 		
@@ -105,8 +105,8 @@ class LaCelda: UICollectionViewCell {
 	let profileImageView : UIImageView = {
 		let imageView = UIImageView()
 		imageView.image = UIImage(named: "mark-zucaritas")
-		imageView.contentMode = .ScaleAspectFit //mantener proporcion
-		imageView.backgroundColor = UIColor.grayColor()
+		imageView.contentMode = .scaleAspectFit //mantener proporcion
+		imageView.backgroundColor = UIColor.gray
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		return imageView
 		
@@ -116,7 +116,7 @@ class LaCelda: UICollectionViewCell {
 	let statusTextView: UITextView = {
 		let textView = UITextView()
 		textView.text = "Que Gran foto  tomada con mi iPhone!"
-		textView.font = UIFont.systemFontOfSize(14)
+		textView.font = UIFont.systemFont(ofSize: 14)
 		return textView
 	}()
 	
@@ -124,7 +124,7 @@ class LaCelda: UICollectionViewCell {
 	let statusImageView : UIImageView = {
 		let imageView = UIImageView()
 		imageView.image = UIImage(named: "playa-mar")
-		imageView.contentMode = .ScaleAspectFill //mantener proporcion, se adapta al 100 del la celda... para evitarlo se usa lo siguiente
+		imageView.contentMode = .scaleAspectFill //mantener proporcion, se adapta al 100 del la celda... para evitarlo se usa lo siguiente
 		imageView.layer.masksToBounds = true
 		return imageView
 		
@@ -133,7 +133,7 @@ class LaCelda: UICollectionViewCell {
 	let likesLabelView : UILabel = {
 		let label = UILabel()
 		label.text = "489 Likes   10.8K Comments"
-		label.font = UIFont.systemFontOfSize(12)
+		label.font = UIFont.systemFont(ofSize: 12)
 		label.textColor = UIColor.rgb(155, green: 161, blue: 171)
 		return label
 	}()
@@ -150,15 +150,15 @@ class LaCelda: UICollectionViewCell {
 	
 	//funcion creada para simplificar la creacion de botones...
 	
-	static func buttonForView(title: String, imageName : String) -> UIButton{
+	static func buttonForView(_ title: String, imageName : String) -> UIButton{
 		let button = UIButton()
-		button.setTitle(title, forState: .Normal)
-		button.setTitleColor(UIColor.rgb(155, green: 161, blue: 171 ), forState: .Normal)
+		button.setTitle(title, for: UIControlState())
+		button.setTitleColor(UIColor.rgb(155, green: 161, blue: 171 ), for: UIControlState())
 		
-		button.setImage(UIImage(named: imageName), forState: .Normal) //icono
+		button.setImage(UIImage(named: imageName), for: UIControlState()) //icono
 		button.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0) // padding del texto en relacion a icono
 		
-		button.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
+		button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		
 		return button
 	}
@@ -167,7 +167,7 @@ class LaCelda: UICollectionViewCell {
 	
 	//definicion del la celda, atributos
 	func setupViews() {
-    	backgroundColor = UIColor.whiteColor()
+    	backgroundColor = UIColor.white
 		//agregando el label de texto (nameLabel) dentro de la celda
 		addSubview(nameLabel)
 		//agregando subview de la imagen a la celda
@@ -201,7 +201,7 @@ class LaCelda: UICollectionViewCell {
 
 extension UIColor{
 	//se crea esta extencion para facilitar la asignacion de colores a los textos
-	static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor{
+	static func rgb(_ red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor{
 		return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1);
 	}
 }
@@ -209,16 +209,16 @@ extension UIColor{
 extension UIView{
 	//extersion creada para limpiar y optimizar el proceso de asignar constraints
 	//cada UIview creada necesita adaptarse mediante constraints pero la creacion de estos puede simplificarse mendiante esta extension
-	func addConstraintsWithFormat(format : String, views : UIView...){
+	func addConstraintsWithFormat(_ format : String, views : UIView...){
 		//como el listado de views es un listado separado por comas vamos a recorrerlo para crear un diccionario (arreglo) y declarar las keys 
 		var viewsDictionary = [String: UIView]()
-		for(index, view) in views.enumerate(){
+		for(index, view) in views.enumerated(){
 			let key = "v\(index)"
 			viewsDictionary[key] = view
 			view.translatesAutoresizingMaskIntoConstraints = false
 		}
 		
-		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
 	
 	}
 }
